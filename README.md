@@ -4,26 +4,20 @@
 
 初回提出版 **v1.4.0**（v1.3.0の表示・ブリッジを継承）。Chrome拡張の **GitHub Releasesからの自動更新** を追加した。更新の実ブラウザ適用は未検証。Windows監視・チャリラボ研究の動作は独立。
 
-## 1. GitHubリポジトリを作る（初回だけ）
+## 1. GitHubの初期登録とRelease公開
 
-1. GitHubの `https://github.com/new` で、所有アカウント `kaitosakuya0831-create` に `work-usage-monitor` を作成する。**公開を選べば**認証トークン無しでReleasesの更新を確認できる。非公開では別の認証方式が必要で、この版のUpdaterは対応しない。
-2. **README/.gitignore/LICENSEの自動初期化は選ばず**、空のリポジトリを作成。
-3. このパッケージを `C:\WorkUsageMonitor` に展開して、そこでPowerShellを開き、Gitが利用可能なら以下を実行（認証はGit Credential Managerに任せる。パスワードやトークンを共有しない）。
+リポジトリは **[kaitosakuya0831-create/work-usage-monitor](https://github.com/kaitosakuya0831-create/work-usage-monitor)** として作成済み。ソースコードv1.4.0は **main** に登録済みです。以前の手順にあった `git init` / 初回 `git push` は不要です。
 
-```powershell
-cd C:\WorkUsageMonitor
-git init
-git add .
-git commit -m "Initial Work ring v1.4.0 and offline-tested updater"
-git branch -M main
-git remote add origin https://github.com/kaitosakuya0831-create/work-usage-monitor.git
-git push -u origin main
-```
+**Windowsへの初回導入は配布済み `Work残量リング_GitHub分離自動更新_v1.4.0.zip` を展開して行います。** このリポジトリはソース保管用です。
 
-4. GitHubのリポジトリ画面 → **Releases → Draft a new release** からタグ `v1.4.0` の正式リリースを公開し、パッケージの `dist` 内にある **`work-ring-extension.zip` と `SHA256SUMS.txt` の2個だけ**をアセットに添付する。
-5. 自動更新プログラムは `https://api.github.com/repos/kaitosakuya0831-create/work-usage-monitor/releases/latest` から **最新の正式リリース**のみを確認する。公開前は `404` や「更新なし」になる。
+GitHub Releasesの初回公開だけは別途必要です。
 
-このリポジトリに**認証Cookie・GitHubトークン・`%LOCALAPPDATA%\ChariLabQuotaBridge` の中身**を公開しないこと。公開リポジトリにソースコードが見えることを理解してから選んでください。
+1. [Releasesページ](https://github.com/kaitosakuya0831-create/work-usage-monitor/releases) → **Draft a new release**。
+2. **Choose a tag** → 新規タグ `v1.4.0` を `main` に対して作成する。
+3. リリース名 `Work残量リング v1.4.0` を指定し、配布ZIP内の `work-usage-monitor/dist/` にある **`work-ring-extension.zip`** と **`SHA256SUMS.txt`** を添付する。
+4. **Publish release** を押す。公開後に初めてWindows Updaterから最新版を取得できます。
+
+Updaterは `https://api.github.com/repos/kaitosakuya0831-create/work-usage-monitor/releases/latest` を読みます。公開前の `404` は正常です。GitHubにトークン・Cookie・利用履歴・Windowsローカルの設定ファイルをアップロードしないでください。
 
 ## 2. Windows PCへの初回インストール
 
