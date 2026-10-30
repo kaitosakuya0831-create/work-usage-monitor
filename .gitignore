@@ -1,0 +1,21 @@
+# User-specific data, authorization and local state (NEVER COMMIT)
+*.token
+bridge.token
+state.json
+events.jsonl
+hook.log
+installed_extension_version.json
+.env
+.env.*
+__pycache__/
+.pytest_cache/
+*.pyc
+.node_modules/
+node_modules/
+*.log
+.DS_Store
+work-ring-backup-*/
+work-ring-update-tmp-*/
+*.lock
+*.crx
+/dist/

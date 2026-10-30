@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict');
+const {fromFreshApi}=require('../src/quota-snapshot.js');
+const t=Date.parse('2026-10-30T00:00:00Z');
+const raw={five:{remaining:16.4,resetMs:t+4*3600000+10*60000},week:{remaining:87.2,resetMs:t+6*86400000+23*3600000}};
+assert.deepEqual(fromFreshApi(raw,t),{five_hour:{remaining_percent:16,reset_minutes:250},weekly:{remaining_percent:87,reset_minutes:10020}});
+assert.equal(fromFreshApi({...raw,five:{remaining:21,resetMs:null}},t),null);
+assert.equal(fromFreshApi({...raw,five:{remaining:20,resetMs:t-60000}},t),null);
+assert.equal(fromFreshApi({...raw,week:{remaining:NaN,resetMs:t+600000}},t),null);
+assert.equal(fromFreshApi({...raw,week:{remaining:102,resetMs:t+600000}},t),null);
+assert.equal(fromFreshApi({...raw,week:{remaining:50,resetMs:t+13*86400000}},t),null);
+assert.equal(fromFreshApi(null,t),null);
+console.log('Fresh API quota snapshot: 7 checks passed');

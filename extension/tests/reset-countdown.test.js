@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const {remaining,localReset}=require('../src/reset-countdown.js');
+const now=Date.UTC(2026,9,29,0,0);
+assert.equal(remaining(now+(4*60+43)*60000,now),'あと4時間43分');
+assert.equal(remaining(now+(6*24+13)*3600000,now),'あと6日13時間');
+assert.equal(remaining(now+43*60000,now),'あと43分');
+assert.equal(remaining(now+39000,now),'まもなく');
+assert.equal(remaining(now,now),'更新を確認中');
+assert.equal(remaining(now-1000,now),'更新を確認中');
+assert.equal(remaining(null,now),'時刻未取得');
+assert.equal(remaining(undefined,now),'時刻未取得');
+assert.equal(remaining(NaN,now),'時刻未取得');
+assert.equal(remaining(now+5*60000,now+2*60000),'あと3分');
+assert.ok(localReset(now).startsWith('2026/10/29'));
+console.log('reset countdown: 11 checks passed');

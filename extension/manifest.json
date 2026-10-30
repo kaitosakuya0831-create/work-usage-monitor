@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Work残量リング | 日本語・Work埋め込み",
+  "short_name": "Work残量リング",
+  "description": "ChatGPTの利用枠を直接読み取り、Work右側に5時間・週間の残り％とリセットまでの時間を表示。任意でWindowsローカル監視へ連携可能。",
+  "version": "1.4.0",
+  "minimum_chrome_version": "114",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Work残量リング設定",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "src/usage-api.js",
+        "src/reset-countdown.js",
+        "src/quota-snapshot.js",
+        "src/widget-style.js",
+        "src/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}
